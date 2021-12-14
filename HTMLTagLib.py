@@ -271,7 +271,7 @@ class A(Element):
     :keyword referrerpolicy: A.ReferrerPolicy; Specifies which referrer information to send with the link. (default: None)
     :keyword rel: A.Rel; Specifies the relationship between the current document and the linked document. (default: None)
     :keyword target: A.Target; Specifies where to open the linked document. (default: None)
-    :keyword htmltype: Str; Specifies the media type of the linked document (default: None) """
+    :keyword HTMLtype: Str; Specifies the media type of the linked document (default: None) """
 
     class ReferrerPolicy(CustomEnum):
         NO_REFERRER = 'no-referrer'
@@ -322,7 +322,7 @@ class A(Element):
         self.rel: A.Rel = kwargs.get('rel',
                                      None)  # Specifies the relationship between the current document and the linked document
         self.target: A.Target = kwargs.get('target', None)  # Specifies where to open the linked document
-        self.htmltype: str = kwargs.get('htmltype', None)  # Specifies the media type of the linked document
+        self.HTMLtype: str = kwargs.get('HTMLtype', None)  # Specifies the media type of the linked document
 
         if self.download is not None: attr.setdefault('download', self.download)
         if self.href is not None: attr.setdefault('href', self.href)
@@ -334,7 +334,7 @@ class A(Element):
         if self.rel is not None and self.rel in A.Rel.__members__.values(): attr.setdefault('rel', A.Rel[self.rel.name])
         if self.target is not None and self.target in A.Target.__members__.values(): attr.setdefault(
             'target', A.Target[self.target.name])
-        if self.htmltype is not None: attr.setdefault('type', self.htmltype)
+        if self.HTMLtype is not None: attr.setdefault('type', self.HTMLtype)
 
         super().__init__('a', attr=attr, html=html, end_tag=True)
         if items is not None: self.set_items(items)
@@ -387,7 +387,7 @@ class Area(Element):
     :keyword rel: Area.Rel; Specifies the relationship between the current document and the target URL. (default: None)
     :keyword shape: Area.Shape; Specifies the shape of the area. (default: None)
     :keyword target: Area.Target; Specifies where to open the target URL. (default: None)
-    :keyword htmltype: Str; Specifies the media type of the target URL. (default: None) """
+    :keyword HTMLtype: Str; Specifies the media type of the target URL. (default: None) """
 
     class ReferrerPolicy(CustomEnum):
         NO_REFERRER = 'no-referrer'
@@ -442,7 +442,7 @@ class Area(Element):
                                         None)  # Specifies the relationship between the current document and the target URL
         self.shape: Area.Shape = kwargs.get('shape', None)  # Specifies the shape of the area
         self.target: Area.Target = kwargs.get('target', None)  # Specifies where to open the target URL
-        self.htmltype: str = kwargs.get('htmltype', None)  # Specifies the media type of the target URL
+        self.HTMLtype: str = kwargs.get('HTMLtype', None)  # Specifies the media type of the target URL
 
         if self.alt is not None:
             attr.setdefault('alt', self.alt)
@@ -461,9 +461,9 @@ class Area(Element):
                                                                                                      Area.Shape[
                                                                                                          self.shape.name])
         if self.target is not None: attr.setdefault('target', self.target)
-        if self.htmltype is not None: attr.setdefault('type', self.htmltype)
+        if self.HTMLtype is not None: attr.setdefault('type', self.HTMLtype)
 
-        super().__init__('address', attr=attr, html=html, end_tag=False)
+        super().__init__('area', attr=attr, html=html, end_tag=False)
 
 
 class Article(Element):
@@ -706,20 +706,14 @@ class Button(Element):
         attr: dict = kwargs.get('attr', {})
         html: str = kwargs.get('html', None)
 
-        self.autofocus: bool = kwargs.get('autofocus',
-                                          False)  # Specifies that a button should automatically get focus when the page loads
+        self.autofocus: bool = kwargs.get('autofocus', False)  # Specifies that a button should automatically get focus when the page loads
         self.disabled: bool = kwargs.get('disabled', False)  # Specifies that a button should be disabled
         self.form: str = kwargs.get('form', None)  # Specifies which form the button belongs to
-        self.formaction: str = kwargs.get('formaction',
-                                          None)  # Specifies where to send the form-data when a form is submitted. Only for type="submit"
-        self.formenctype: Form.EncType = kwargs.get('formenctype',
-                                                    None)  # Specifies how form-data should be encoded before sending it to a server. Only for type="submit"
-        self.formmethod: Form.Method = kwargs.get('formmethod',
-                                                  None)  # Specifies how to send the form-data (which HTTP method to use). Only for type="submit"
-        self.formnovalidate: bool = kwargs.get('formnovalidate',
-                                               False)  # Specifies that the form-data should not be validated on submission. Only for type="submit"
-        self.formtarget: [Form.Target, str] = kwargs.get('formtarget',
-                                                         None)  # Specifies where to display the response after submitting the form. Only for type="submit"
+        self.formaction: str = kwargs.get('formaction', None)  # Specifies where to send the form-data when a form is submitted. Only for type="submit"
+        self.formenctype: Form.EncType = kwargs.get('formenctype', None)  # Specifies how form-data should be encoded before sending it to a server. Only for type="submit"
+        self.formmethod: Form.Method = kwargs.get('formmethod', None)  # Specifies how to send the form-data (which HTTP method to use). Only for type="submit"
+        self.formnovalidate: bool = kwargs.get('formnovalidate', False)  # Specifies that the form-data should not be validated on submission. Only for type="submit"
+        self.formtarget: [Form.Target, str] = kwargs.get('formtarget', None)  # Specifies where to display the response after submitting the form. Only for type="submit"
         self.name: str = kwargs.get('name', None)  # Specifies a name for the button
         self.HTMLtype: Button.Type = kwargs.get('HTMLtype', None)  # Specifies the type of button
         self.value: str = kwargs.get('value', None)  # Specifies an initial value for the button
@@ -731,7 +725,7 @@ class Button(Element):
                                                                                                 self.formaction)
         if self.formenctype is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formenctype',
                                                                                                  self.formenctype)
-        if self.formmethod is not None and self.formmethod in Form.Method and self.htmltype == Button.Type.SUBMIT: attr.setdefault(
+        if self.formmethod is not None and self.formmethod in Form.Method and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault(
             'formmethod', self.formmethod)
         if self.formnovalidate is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formnovalidate',
                                                                                                     None)
@@ -741,10 +735,8 @@ class Button(Element):
             else:
                 attr.setdefault('formtarget', self.formtarget)
         if self.name is not None: attr.setdefault('name', self.name)
-        if self.HTMLtype is not None and self.HTMLtype in Button.Type.__members__.values():
-            attr.setdefault('type', Button.Type[self.HTMLtype.name])
-        elif self.HTMLtype is not None and self.HTMLtype in Button.Type.__members__.keys():
-            attr.setdefault('type', Button.Type[self.HTMLtype.name])
+        if self.HTMLtype is not None and self.HTMLtype in Button.Type.__members__.values(): attr.setdefault('type', Button.Type[self.HTMLtype.name])
+        elif self.HTMLtype is not None and self.HTMLtype in Button.Type.__members__.keys(): attr.setdefault('type', Button.Type[self.HTMLtype.name])
         if self.value is not None: attr.setdefault('value', self.value)
 
         super().__init__('button', attr=attr, html=html, end_tag=False)
