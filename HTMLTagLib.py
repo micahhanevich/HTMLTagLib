@@ -9,8 +9,8 @@ Intended for use with HTML5 and a Python Bottle Framework.
 from enum import Enum
 from datetime import datetime
 
-# CUSTOM SETUP
 
+# CUSTOM ENUM SETUP
 class CustomEnum(Enum):
     def __str__(self):
         return '{0}'.format(self.value)
@@ -26,7 +26,7 @@ class Element:
     :param tag: Type of HTML Element.
     :param attr: Dictionary of attribute choices for the Element. (default: None)
     :param html: Overrides generated html str (default: None)
-    :param end_tag: Whether or not to generate a terminating tag. Ex: </div> (default: True) """
+    :param end_tag: Whether to generate a terminating tag. Ex: </div> (default: True) """
 
     _attributes: dict
 
@@ -1760,11 +1760,10 @@ class Label(Element):
         attr: dict = kwargs.get('attr', {})
         html: str = kwargs.get('html', None)
 
-        self.HTMLfor: str = kwargs.get('HTMLfor',
-                                       None)  # Specifies the id of the form element the label should be bound to
+        self.HTMLfor: str = kwargs.get('HTMLfor', None)  # Specifies the id of the form element the label should be bound to
         self.form: str = kwargs.get('form', None)  # Specifies which form the label belongs to
 
-        if self.HTMLfor is not None: attr.setdefault('for', self.htmlfor)
+        if self.HTMLfor is not None: attr.setdefault('for', self.HTMLfor)
         if self.form is not None: attr.setdefault('form', self.form)
 
         super().__init__('label', attr=attr, html=html, end_tag=True)
