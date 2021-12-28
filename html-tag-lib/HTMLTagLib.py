@@ -102,13 +102,22 @@ class Element:
                 # If it is not a specialized attribute:
                 if attr_name[0:4] != 'HTML':
 
-                    # Add the attribute normally. 'attribute=value'
-                    attr_list += f'{attr_name}=\"{attr_val}\"'
+                    if type(attr_val) == type(''):
+                        # Add the attribute normally. 'attribute=value'
+                        attr_list += f'{attr_name}=\"{attr_val}\"'
+                    else:
+                        # Add the attribute normally. 'attribute=value'
+                        attr_list += f'{attr_name}={attr_val}'
 
                 else:
 
-                    # Add the specialized attribute.
-                    attr_list += f'{attr_name[4:]}=\"{attr_val}\"'
+                    if type(attr_val) == type(''):
+                        # Add the specialized attribute.
+                        attr_list += f'{attr_name[4:]}=\"{attr_val}\"'
+                    else:
+                        # Add the specialized attribute.
+                        attr_list += f'{attr_name[4:]}={attr_val}'
+
 
             # If the attribute has a name but no value, it means
             #  we want a special type of attribute. If this type
@@ -721,14 +730,10 @@ class Button(Element):
         if self.autofocus: attr.setdefault('autofocus', None)
         if self.disabled: attr.setdefault('disabled', None)
         if self.form is not None: attr.setdefault('form', self.form)
-        if self.formaction is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formaction',
-                                                                                                self.formaction)
-        if self.formenctype is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formenctype',
-                                                                                                 self.formenctype)
-        if self.formmethod is not None and self.formmethod in Form.Method and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault(
-            'formmethod', self.formmethod)
-        if self.formnovalidate is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formnovalidate',
-                                                                                                    None)
+        if self.formaction is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formaction', self.formaction)
+        if self.formenctype is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formenctype', self.formenctype)
+        if self.formmethod is not None and self.formmethod in Form.Method and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formmethod', self.formmethod)
+        if self.formnovalidate is not None and self.HTMLtype == Button.Type.SUBMIT: attr.setdefault('formnovalidate', None)
         if self.formtarget is not None and self.HTMLtype == Button.Type.SUBMIT:
             if self.formtarget in Form.Target.__members__.values():
                 attr.setdefault('formtarget', Form.Target[self.formtarget.name])
@@ -1202,21 +1207,15 @@ class Form(Element):
         attr: dict = kwargs.get('attr', {})
         html: str = kwargs.get('html', None)
 
-        self.acceptcharset: str = kwargs.get('acceptcharset',
-                                             None)  # Specifies the character encodings that are to be used for the form submission
+        self.acceptcharset: str = kwargs.get('acceptcharset', None)  # Specifies the character encodings that are to be used for the form submission
         self.action: str = kwargs.get('action', None)  # Specifies where to send the form-data when a form is submitted
-        self.autocomplete: bool = kwargs.get('autocomplete',
-                                             False)  # Specifies whether a form should have autocomplete on or off
-        self.enctype: Form.EncType = kwargs.get('enctype',
-                                                None)  # Specifies how the form-data should be encoded when submitting it to the server (only for method="post")
+        self.autocomplete: bool = kwargs.get('autocomplete', False)  # Specifies whether a form should have autocomplete on or off
+        self.enctype: Form.EncType = kwargs.get('enctype', None)  # Specifies how the form-data should be encoded when submitting it to the server (only for method="post")
         self.method: Form.Method = kwargs.get('method', None)  # Specifies the HTTP method to use when sending form-data
         self.name: str = kwargs.get('name', None)  # Specifies the name of a form
-        self.novalidate: bool = kwargs.get('novalidate',
-                                           False)  # Specifies that the form should not be validated when submitted
-        self.rel: Form.Rel = kwargs.get('rel',
-                                        None)  # Specifies the relationship between a linked resource and the current document
-        self.target: Form.Target = kwargs.get('target',
-                                              None)  # Specifies where to display the response that is received after submitting the form
+        self.novalidate: bool = kwargs.get('novalidate', False)  # Specifies that the form should not be validated when submitted
+        self.rel: Form.Rel = kwargs.get('rel', None)  # Specifies the relationship between a linked resource and the current document
+        self.target: Form.Target = kwargs.get('target', None)  # Specifies where to display the response that is received after submitting the form
 
         if self.acceptcharset is not None: attr.setdefault('accept-charset', self.acceptcharset)
         if self.action is not None: attr.setdefault('action', self.action)
@@ -1224,18 +1223,12 @@ class Form(Element):
             attr.setdefault('autocomplete', 'on')
         elif not self.autocomplete and self.autocomplete is not None:
             attr.setdefault('autocomplete', 'off')
-        if self.enctype is not None and self.enctype in Form.EncType.__members__.values(): attr.setdefault('enctype',
-                                                                                                           Form.EncType[
-                                                                                                               self.enctype.name])
-        if self.method is not None and self.method in Form.Method.__members__.values(): attr.setdefault('method',
-                                                                                                        Form.Method[
-                                                                                                            self.method.name])
+        if self.enctype is not None and self.enctype in Form.EncType.__members__.values(): attr.setdefault('enctype', Form.EncType[self.enctype.name])
+        if self.method is not None and self.method in Form.Method.__members__.values(): attr.setdefault('method', Form.Method[self.method.name])
         if self.name is not None: attr.setdefault('name', self.name)
         if self.novalidate: attr.setdefault('novalidate', None)
-        if self.rel is not None and self.rel in Form.Rel.__members__.values(): attr.setdefault('rel',
-                                                                                               Form.Rel[self.rel.name])
-        if self.target is not None and self.target in Form.Target.__members__.values(): attr.setdefault(
-            'target', Form.Target[self.target.name])
+        if self.rel is not None and self.rel in Form.Rel.__members__.values(): attr.setdefault('rel', Form.Rel[self.rel.name])
+        if self.target is not None and self.target in Form.Target.__members__.values(): attr.setdefault('target', Form.Target[self.target.name])
 
         super().__init__('form', attr=attr, html=html, end_tag=True)
         if items is not None: self.set_items(items)
@@ -1584,21 +1577,21 @@ class Input(Element):
         attr: dict = kwargs.get('attr', {})
         html: str = kwargs.get('html', None)
 
-        self.type: Input.Type = kwargs.get('type', Input.Type.TEXT)
-        if self.type is None: self.type = Input.Type.TEXT
+        self.HTMLtype: Input.Type = kwargs.get('HTMLtype', Input.Type.TEXT)
+        if self.HTMLtype is None: self.HTMLtype = Input.Type.TEXT
 
         self.accept: list[Input.Accept, str] = kwargs.get('accept',
                                                           None)  # Specifies a filter for what file types the user can pick from the file input dialog box (only for type="file")
         self.alt: str = kwargs.get('alt', None)  # Specifies an alternate text for images (only for type="image")
         self.autocomplete: bool = kwargs.get('autocomplete',
-                                             None)  # Specifies whether an <input> element should have autocomplete enabled
+                                             None)  # Specifies whether an input element should have autocomplete enabled
         self.autofocus: bool = kwargs.get('autofocus',
-                                          False)  # Specifies that an <input> element should automatically get focus when the page loads
+                                          False)  # Specifies that an input element should automatically get focus when the page loads
         self.checked: bool = kwargs.get('checked',
-                                        False)  # Specifies that an <input> element should be pre-selected when the page loads (for type="checkbox" or type="radio")
+                                        False)  # Specifies that an input element should be pre-selected when the page loads (for type="checkbox" or type="radio")
         self.dirname: str = kwargs.get('dirname', None)  # Specifies that the text direction will be submitted
-        self.disabled: bool = kwargs.get('disabled', False)  # Specifies that an <input> element should be disabled
-        self.form: str = kwargs.get('form', None)  # Specifies the form the <input> element belongs to
+        self.disabled: bool = kwargs.get('disabled', False)  # Specifies that an input element should be disabled
+        self.form: str = kwargs.get('form', None)  # Specifies the form the input element belongs to
         self.formaction: str = kwargs.get('formaction',
                                           None)  # Specifies the URL of the file that will process the input control when the form is submitted (for type="submit" and type="image")
         self.formenctype: Form.EncType = kwargs.get('formenctype',
@@ -1610,36 +1603,38 @@ class Input(Element):
         self.formtarget: [Form.Target, str] = kwargs.get('formtarget',
                                                          None)  # Specifies where to display the response that is received after submitting the form (for type="submit" and type="image")
         self.height: float = kwargs.get('height',
-                                        None)  # Specifies the height of an <input> element (only for type="image")
+                                        None)  # Specifies the height of an input element (only for type="image")
         self.width: float = kwargs.get('width',
-                                       None)  # Specifies the width of an <input> element (only for type="image")
+                                       None)  # Specifies the width of an input element (only for type="image")
         self.list: str = kwargs.get('list',
-                                    None)  # Refers to a <datalist> element that contains pre-defined options for an <input> element
-        self.max: [str, int] = kwargs.get('max', None)  # Specifies the maximum value for an <input> element
+                                    None)  # Refers to a datalist element that contains pre-defined options for an input element
+        self.max: [str, int] = kwargs.get('max', None)  # Specifies the maximum value for an input element
         self.maxlength: int = kwargs.get('maxlength',
-                                         None)  # Specifies the maximum number of characters allowed in an <input> element
-        self.min: [str, int] = kwargs.get('min', None)  # Specifies a minimum value for an <input> element
+                                         None)  # Specifies the maximum number of characters allowed in an input element
+        self.min: [str, int] = kwargs.get('min', None)  # Specifies a minimum value for an input element
         self.minlength: int = kwargs.get('minlength',
-                                         None)  # Specifies the minimum number of characters required in an <input> element
+                                         None)  # Specifies the minimum number of characters required in an input element
         self.multiple: bool = kwargs.get('multiple',
-                                         False)  # Specifies that a user can enter more than one value in an <input> element
-        self.name: str = kwargs.get('name', None)  # Specifies the name of an <input> element
+                                         False)  # Specifies that a user can enter more than one value in an input element
+        self.name: str = kwargs.get('name', None)  # Specifies the name of an input element
         self.pattern: str = kwargs.get('pattern',
-                                       None)  # Specifies a regular expression that an <input> element's value is checked against
+                                       None)  # Specifies a regular expression that an input element's value is checked against
         self.placeholder: str = kwargs.get('placeholder',
-                                           None)  # Specifies a short hint that describes the expected value of an <input> element
+                                           None)  # Specifies a short hint that describes the expected value of an input element
         self.readonly: bool = kwargs.get('readonly', False)  # Specifies that an input field is read-only
         self.required: bool = kwargs.get('required',
                                          False)  # Specifies that an input field must be filled out before submitting the form
-        self.size: int = kwargs.get('size', None)  # Specifies the width, in characters, of an <input> element
+        self.size: int = kwargs.get('size', None)  # Specifies the width, in characters, of an input element
         self.src: str = kwargs.get('src',
                                    None)  # Specifies the URL of the image to use as a submit button (only for type="image")
         self.step: str = kwargs.get('step', None)  # Specifies the interval between legal numbers in an input field
-        self.value: str = kwargs.get('value', None)  # Specifies the value of an <input> element
+        self.value: str = kwargs.get('value', None)  # Specifies the value of an input element
 
-        if self.type == Input.Type.CHECKBOX or self.type == Input.Type.RADIO:
+        attr.setdefault('type', self.HTMLtype.value)
+
+        if self.HTMLtype == Input.Type.CHECKBOX or self.HTMLtype == Input.Type.RADIO:
             if self.checked: attr.setdefault('checked', None)
-        elif self.type == Input.Type.FILE:
+        elif self.HTMLtype == Input.Type.FILE:
             if self.accept is not None and len(self.accept) > 0:
                 if len(self.accept) == 1:
                     if self.accept[0] in Input.Accept.__members__.values():
@@ -1650,7 +1645,7 @@ class Input(Element):
                     for _ in self.accept: _ = str(_)
                     self.accept: list[str]
                     attr.setdefault('accept', ','.join(self.accept))
-        elif self.type == Input.Type.IMAGE:
+        elif self.HTMLtype == Input.Type.IMAGE:
             if self.alt is not None: attr.setdefault('alt', self.alt)
             if self.formaction is not None: attr.setdefault('formaction', self.formaction)
             if self.formenctype is not None and self.formenctype in Form.EncType.__members__.values(): attr.setdefault(
@@ -1662,7 +1657,7 @@ class Input(Element):
             if self.height is not None: attr.setdefault('height', self.height)
             if self.width is not None: attr.setdefault('width', self.width)
             if self.src is not None: attr.setdefault('src', self.src)
-        elif self.type == Input.Type.Submit:
+        elif self.HTMLtype == Input.Type.SUBMIT:
             if self.formaction is not None: attr.setdefault('formaction', self.formaction)
             if self.formenctype is not None and self.formenctype in Form.EncType.__members__.values(): attr.setdefault(
                 'formenctype', Form.EncType[self.formenctype.name])
@@ -1740,7 +1735,7 @@ class Kbd(Element):
 
 class Label(Element):
     """Represents an HTML Label Element;
-    Defines a label for an <input> element.
+    Defines a label for an input element.
 
     :keyword attr: Attributes Dictionary that places items as an attribute in an Element. (default: {})
     :keyword html: Str to override object's generated HTML value. Does not update the rest of the object to reflect HTML str. (default: None)
@@ -1865,8 +1860,7 @@ class Link(Element):
         if self.media is not None: attr.setdefault('media', self.media)
         if self.referrerpolicy is not None and self.referrerpolicy in Link.ReferrerPolicy.__members__.values(): attr.setdefault(
             'referrerpolicy', Link.ReferrerPolicy[self.referrerpolicy.name])
-        if self.rel is not None and self.rel in Link.Rel.__members__.values(): attr.setdefault('rel',
-                                                                                               Link.Rel[self.rel])
+        if self.rel is not None and self.rel in Link.Rel.__members__.values(): attr.setdefault('rel', Link.Rel[self.rel.name])
         if self.sizes is not None: attr.setdefault('sizes', self.sizes)
         if self.HTMLtype is not None: attr.setdefault('type', self.type)
 
@@ -2168,9 +2162,8 @@ class Option(Element):
 
         self.disabled: bool = kwargs.get('disabled', False)  # Specifies that an option should be disabled
         self.label: str = kwargs.get('label', None)  # Specifies a shorter label for an option
-        self.selected: bool = kwargs.get('selected',
-                                         False)  # Specifies that an option should be pre-selected when the page loads
-        self.value: str = kwargs.get('value', None)  # Specifies the value to be sent to a server
+        self.selected: bool = kwargs.get('selected', False)  # Specifies that an option should be pre-selected when the page loads
+        self.value: any = kwargs.get('value', None)  # Specifies the value to be sent to a server
 
         if self.disabled: attr.setdefault('disabled', None)
         if self.label is not None: attr.setdefault('label', self.label)
