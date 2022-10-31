@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "htmltaglib"
-version = "1.2.0"
+version = "1.2.1"
 authors = [
   { name="Micah J Hanevich", email="micahjhanevich@gmail.com" },
 ]
