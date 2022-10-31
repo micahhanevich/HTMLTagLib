@@ -1,14 +1,14 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling","datetime"]
 build-backend = "hatchling.build"
 
 [project]
-name = "example_package_swordsman300"
-version = "0.0.1"
+name = "htmltaglib"
+version = "1.2.0"
 authors = [
   { name="Micah J Hanevich", email="micahjhanevich@gmail.com" },
 ]
-description = "A small example package"
+description = "Designed to be an easy-to-implement HTML Element source for Bottle (and other) projects."
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
@@ -18,5 +18,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Homepage" = "https://github.com/micahhanevich/HTMLTagLib"
+"Bug Tracker" = "https://github.com/micahhanevich/HTMLTagLib/issues"

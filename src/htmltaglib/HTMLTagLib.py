@@ -118,7 +118,6 @@ class Element:
                         # Add the specialized attribute.
                         attr_list += f'{attr_name[4:]}={attr_val}'
 
-
             # If the attribute has a name but no value, it means
             #  we want a special type of attribute. If this type
             #  is used, it's name is entered with no '='.
@@ -178,7 +177,7 @@ class Element:
 
     def reload(self):
         """Updates the object's HTML.
-        Usable as an easy-to-overrite
+        Usable as an easy-to-overwrite
         public call to _gen_html"""
 
         self._gen_html()
