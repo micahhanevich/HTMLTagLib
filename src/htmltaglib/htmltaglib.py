@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 # CUSTOM ENUM SETUP
-class CustomEnum(Enum):
+class _CustomEnum(Enum):
     def __str__(self):
         return '{0}'.format(self.value)
 
@@ -19,11 +19,11 @@ class CustomEnum(Enum):
 # ELEMENTS
 
 class Element:
-    """ Represents an HTML element. Used to make dynamic page
+    """ Represents a generic HTML tag. Used to make dynamic page
     generation in-code easily applicable to a ``bottle`` webpage.
     Used as the base class for more advanced objects of this type.
 
-    :param tag: Type of HTML Element.
+    :param tag: Type of HTML tag.
     :param attr: Dictionary of attribute choices for the Element. (default: None)
     :param html: Overrides generated html str (default: None)
     :param end_tag: Whether to generate a terminating tag. Ex: </div> (default: True) """
@@ -214,7 +214,7 @@ class Element:
         self._gen_html()
         return self
 
-    def add_item(self, item):
+    def add_item(self, item: any):
         """Appends an item onto self.items;
         updates HTML"""
 
@@ -222,7 +222,7 @@ class Element:
         self._gen_html()
         return self
 
-    def add_items(self, value: list):
+    def add_items(self, value: Iterable):
         """Appends a list of values onto
         self.items; updates HTML"""
 
@@ -281,7 +281,7 @@ class A(Element):
     :keyword target: A.Target; Specifies where to open the linked document. (default: None)
     :keyword HTMLtype: Str; Specifies the media type of the linked document (default: None) """
 
-    class ReferrerPolicy(CustomEnum):
+    class ReferrerPolicy(_CustomEnum):
         NO_REFERRER = 'no-referrer'
         NO_REFERRER_DOWNGRADE = 'no-referrer-when-downgrade'
         ORIGIN = 'origin'
@@ -290,7 +290,7 @@ class A(Element):
         STRICT_ORIGIN_CROSS_ORIGIN = 'strict-origin-when-cross-origin'
         UNSAFE_URL = 'unsafe-url'
 
-    class Rel(CustomEnum):
+    class Rel(_CustomEnum):
         ALTERNATE = 'alternate'
         AUTHOR = 'author'
         BOOKMARK = 'bookmark'
@@ -305,7 +305,7 @@ class A(Element):
         SEARCH = 'search'
         TAG = 'tag'
 
-    class Target(CustomEnum):
+    class Target(_CustomEnum):
         BLANK = '_blank'
         PARENT = '_parent'
         SELF = '_self'
@@ -397,7 +397,7 @@ class Area(Element):
     :keyword target: Area.Target; Specifies where to open the target URL. (default: None)
     :keyword HTMLtype: Str; Specifies the media type of the target URL. (default: None) """
 
-    class ReferrerPolicy(CustomEnum):
+    class ReferrerPolicy(_CustomEnum):
         NO_REFERRER = 'no-referrer'
         NO_REFERRER_DOWNGRADE = 'no-referrer-when-downgrade'
         ORIGIN = 'origin'
@@ -406,7 +406,7 @@ class Area(Element):
         STRICT_ORIGIN_CROSS_ORIGIN = 'strict-origin-when-cross-origin'
         UNSAFE_URL = 'unsafe-url'
 
-    class Rel(CustomEnum):
+    class Rel(_CustomEnum):
         ALTERNATE = 'alternate'
         AUTHOR = 'author'
         BOOKMARK = 'bookmark'
@@ -420,13 +420,13 @@ class Area(Element):
         SEARCH = 'search'
         TAG = 'tag'
 
-    class Shape(CustomEnum):
+    class Shape(_CustomEnum):
         DEFAULT = 'default'
         RECTANGLE = 'rect'
         CIRCLE = 'circle'
-        POLY = 'poly'
+        POLYGON = 'poly'
 
-    class Target(CustomEnum):
+    class Target(_CustomEnum):
         BLANK = '_blank'
         PARENT = '_parent'
         SELF = '_self'
@@ -517,7 +517,7 @@ class Audio(Element):
     :keyword muted: Bool; Specifies that the audio output should be muted. (default: False)
     :keyword preload: Audio.Preload; Specifies if and how the author thinks the audio should be loaded when the page loads. (default: None) """
 
-    class Preload(CustomEnum):
+    class Preload(_CustomEnum):
         AUTO = 'auto'
         METADATA = 'metadata'
         NONE = 'none'
@@ -573,7 +573,7 @@ class Base(Element):
     :keyword href: Str; Specifies the base URL for all relative URLs in the page. (default: None)
     :keyword target: Base.Target; Specifies the default target for all hyperlinks and forms in the page. (default: None) """
 
-    class Target(CustomEnum):
+    class Target(_CustomEnum):
         BLANK = '_blank'
         PARENT = '_parent'
         SELF = '_self'
@@ -618,7 +618,7 @@ class BDO(Element):
     :keyword attr: Attributes Dictionary that places items as an attribute in an Element. (default: {})
     :keyword html: Str to override object's generated HTML value. Does not update the rest of the object to reflect HTML str. (default: None) """
 
-    class Direction(CustomEnum):
+    class Direction(_CustomEnum):
         LEFT_TO_RIGHT = 'ltr'
         RIGHT_TO_LEFT = 'rtl'
 
@@ -705,7 +705,7 @@ class Button(Element):
     :keyword HTMLtype: Button.Type; Specifies the type of button. (default: None)
     :keyword value: Str; Specifies an initial value for the button. (default: None) """
 
-    class Type(CustomEnum):
+    class Type(_CustomEnum):
         BUTTON = 'button'
         RESET = 'reset'
         SUBMIT = 'submit'
@@ -1175,16 +1175,16 @@ class Form(Element):
     :keyword rel: Form.Rel; Specifies the relationship between a linked resource and the current document. (default: None)
     :keyword target: Form.Target; Specifies where to display the response that is received after submitting the form. (default: None) """
 
-    class EncType(CustomEnum):
+    class EncType(_CustomEnum):
         APPLICATION = 'application/x-www-form-urlencoded'
         MULTIPART = 'multipart/form-data'
         TEXT = 'text/plain'
 
-    class Method(CustomEnum):
+    class Method(_CustomEnum):
         GET = 'get'
         POST = 'post'
 
-    class Rel(CustomEnum):
+    class Rel(_CustomEnum):
         EXTERNAL = 'external'
         HELP = 'help'
         LICENSE = 'license'
@@ -1196,7 +1196,7 @@ class Form(Element):
         PREV = 'prev'
         SEARCH = 'search'
 
-    class Target(CustomEnum):
+    class Target(_CustomEnum):
         BLANK = '_blank'
         PARENT = '_parent'
         SELF = '_self'
@@ -1356,11 +1356,11 @@ class IFrame(Element):
     :keyword src: Str; Specifies the address of the document to embed in the <iframe>. (default: None)
     :keyword srcdoc: Str; Specifies the HTML content of the page to show in the <iframe>. (default: None) """
 
-    class Loading(CustomEnum):
+    class Loading(_CustomEnum):
         EAGER = 'eager'
         LAZY = 'lazy'
 
-    class ReferrerPolicy(CustomEnum):
+    class ReferrerPolicy(_CustomEnum):
         NO_REFERRER = 'no-referrer'
         NO_REFERRER_DOWNGRADE = 'no-referrer-when-downgrade'
         ORIGIN = 'origin'
@@ -1369,7 +1369,7 @@ class IFrame(Element):
         STRICT_ORIGIN_CROSS_ORIGIN = 'strict-origin-when-cross-origin'
         UNSAFE_URL = 'unsafe-url'
 
-    class Sandbox(CustomEnum):
+    class Sandbox(_CustomEnum):
         ALLOW_FORMS = 'allow-forms'
         ALLOW_POINTER_LOCK = 'allow-pointer-lock'
         ALLOW_POPUPS = 'allow-popups'
@@ -1443,15 +1443,15 @@ class Img(Element):
     :keyword srcset: List of Str; Specifies a list of image files to use in different situations. (default: None)
     :keyword usemap: Str; Specifies an image as a client-side image map. (default: None) """
 
-    class CrossOrigin(CustomEnum):
+    class CrossOrigin(_CustomEnum):
         ANONYMOUS = 'anonymous'
         USE_CREDENTIALS = 'use-credentials'
 
-    class Loading(CustomEnum):
+    class Loading(_CustomEnum):
         EAGER = 'eager'
         LAZY = 'lazy'
 
-    class ReferrerPolicy(CustomEnum):
+    class ReferrerPolicy(_CustomEnum):
         NO_REFERRER = 'no-referrer'
         NO_REFERRER_DOWNGRADE = 'no-referrer-when-downgrade'
         ORIGIN = 'origin'
@@ -1542,7 +1542,7 @@ class Input(Element):
     :keyword step: Str; Specifies the interval between legal numbers in an input field. (default: None)
     :keyword value: Str; Specifies the value of an input element. (default: None) """
 
-    class Type(CustomEnum):
+    class Type(_CustomEnum):
         BUTTON = 'button'
         CHECKBOX = 'checkbox'
         COLOR = 'color'
@@ -1566,7 +1566,7 @@ class Input(Element):
         URL = 'url'
         WEEK = 'week'
 
-    class Accept(CustomEnum):
+    class Accept(_CustomEnum):
         FILE_EXTENSION = 'file_extension'
         AUDIO = 'audio/*'
         VIDEO = 'video/*'
@@ -1809,18 +1809,18 @@ class Link(Element):
     :keyword sizes: Str; Specifies the size of the linked resource. Only for rel="icon". (default: None)
     :keyword HTMLtype: Str; Specifies the media type of the linked document. (default: None) """
 
-    class CrossOrigin(CustomEnum):
+    class CrossOrigin(_CustomEnum):
         ANONYMOUS = 'anonymous'
         USE_CREDENTIALS = 'use-credentials'
 
-    class ReferrerPolicy(CustomEnum):
+    class ReferrerPolicy(_CustomEnum):
         NO_REFERRER = 'no-referrer'
         NO_REFERRER_DOWNGRADE = 'no-referrer-when-downgrade'
         ORIGIN = 'origin'
         ORIGIN_CROSS_ORIGIN = 'origin-when-cross-origin'
         UNSAFE_URL = 'unsafe-url'
 
-    class Rel(CustomEnum):
+    class Rel(_CustomEnum):
         ALTERNATE = 'alternate'
         AUTHOR = 'author'
         DNS_PREFETCH = 'dns_prefetch'
@@ -1930,13 +1930,13 @@ class Meta(Element):
     :keyword httpequiv: Meta.HttpEquiv; Provides an HTTP header for the information/value of the content attribute. (default: None)
     :keyword name: Meta.Name; Specifies a name for the metadata. (default: None) """
 
-    class HttpEquiv(CustomEnum):
+    class HttpEquiv(_CustomEnum):
         CONTENT_SEC_POLICY = 'content-security-policy'
         CONTENT_TYPE = 'content-type'
         DEFAULT_STYLE = 'default-style'
         REFRESH = 'refresh'
 
-    class Name(CustomEnum):
+    class Name(_CustomEnum):
         APPLICATION_NAME = 'application-name'
         AUTHOR = 'author'
         DESCRIPTION = 'description'
@@ -2094,7 +2094,7 @@ class OL(Element):
     :keyword start: Float; Specifies the start value of an ordered list. (default: None)
     :keyword HTMLtype: OL.Type; Specifies the kind of marker to use in the list. (default: OL.Type.DECIMAL) """
 
-    class Type(CustomEnum):
+    class Type(_CustomEnum):
         DECIMAL = '1'  # Default. Decimal numbers (1, 2, 3, 4)
         ALPHA_LOWERCASE = 'a'  # Alphabetically ordered list, lowercase (a, b, c, d)
         ALPHA_UPPERCASE = 'A'  # Alphabetically ordered list, uppercase (A, B, C, D)
@@ -2407,11 +2407,11 @@ class Script(Element):
     :keyword src: Str; Specifies the URL of an external script file. (default: None)
     :keyword HTMLtype: Str; Specifies the media type of the script. (default: None) """
 
-    class CrossOrigin(CustomEnum):
+    class CrossOrigin(_CustomEnum):
         ANONYMOUS = 'anonymous'
         USE_CREDENTIALS = 'use-credentials'
 
-    class ReferrerPolicy(CustomEnum):
+    class ReferrerPolicy(_CustomEnum):
         NO_REFERRER = 'no-referrer'
         NO_REFERRER_DOWNGRADE = 'no-referrer-when-downgrade'
         ORIGIN = 'origin'
@@ -2602,7 +2602,7 @@ class Style(Element):
     :keyword media: Str; Specifies what media/device the media resource is optimized for. (default: None)
     :keyword HTMLtype: Style.Type; Specifies the media type of the style tag. (default: None) """
 
-    class Type(CustomEnum):
+    class Type(_CustomEnum):
         TEXT_CSS = 'text/css'
 
     def __init__(self, items: list = None, **kwargs):
@@ -2773,7 +2773,7 @@ class TextArea(Element):
     :keyword required: Bool; Specifies that a text area is required/must be filled out. (default: False)
     :keyword wrap: TextArea.Wrap; Specifies how the text in a text area is to be wrapped when submitted in a form. (default: None) """
 
-    class Wrap(CustomEnum):
+    class Wrap(_CustomEnum):
         HARD = 'hard'
         SOFT = 'soft'
 
@@ -2847,7 +2847,7 @@ class TH(Element):
     :keyword rowspan: Int; Specifies the number of rows a header cell should span. (default: None)
     :keyword scope: TH.Scope; Specifies whether a header cell is a header for a column, row, or group of columns or rows. (default: None) """
 
-    class Scope(CustomEnum):
+    class Scope(_CustomEnum):
         COL = 'col'
         COLGROUP = 'colgroup'
         ROW = 'row'
@@ -2955,7 +2955,7 @@ class Track(Element):
     :keyword label: Str; Specifies the title of the text track. (default: None)
     :keyword srclang: Str; Specifies the language of the track text data (required if kind="subtitles"). (default: None) """
 
-    class Kind(CustomEnum):
+    class Kind(_CustomEnum):
         CAPTIONS = 'captions'
         CHAPTERS = 'chapters'
         DESCRIPTIONS = 'descriptions'
@@ -3049,7 +3049,7 @@ class Video(Element):
     :keyword preload: Video.Preload; Specifies if and how the author thinks the video should be loaded when the page loads. (default: None)
     :keyword src: Str; Specifies the URL of the video file. (default: None) """
 
-    class Preload(CustomEnum):
+    class Preload(_CustomEnum):
         AUTO = 'auto'
         METADATA = 'metadata'
         NONE = 'none'
