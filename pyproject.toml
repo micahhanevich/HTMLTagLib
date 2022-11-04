@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "htmltaglib"
-version = "1.2.1"
+version = "2.0.0"
 authors = [
   { name="Micah J Hanevich", email="micahjhanevich@gmail.com" },
 ]
@@ -18,5 +18,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/micahhanevich/HTMLTagLib"
+"Homepage" = "https://github.com/micahhanevich/HTMLTagLib/tree/QoLImprovements"
 "Bug Tracker" = "https://github.com/micahhanevich/HTMLTagLib/issues"
