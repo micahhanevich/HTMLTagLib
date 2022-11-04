@@ -8,6 +8,7 @@ Intended for use with HTML5 and a Python Bottle Framework.
 
 from enum import Enum
 from datetime import datetime
+from typing import Iterable
 
 
 # CUSTOM ENUM SETUP
