@@ -22,6 +22,7 @@ var/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
+tests/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -127,3 +128,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Nothing in particular
+src/htmltaglib/functions/text.txt
