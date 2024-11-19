@@ -5,9 +5,15 @@
 These versions of the project are
 currently being supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.2.1   | :white_check_mark: |
+| Version | Supported |
+|---------|-----------|
+| 1.0.0   | X         |
+| 1.0.1   | X         |
+| 1.1.0   | X         |
+| 1.2.0   | X         |
+| 1.2.1   | X         |
+| 2.0.0   | X         |
+| 2.1.0   | ✓         |
 
 ## Reporting a Vulnerability
 
